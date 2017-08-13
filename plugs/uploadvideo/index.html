@@ -1,0 +1,57 @@
+<link rel="stylesheet" href="http://jssdk.demo.qiniu.io/bower_components/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="{$plugPath}/qiniu/styles/main.css">
+<link rel="stylesheet" href="{$plugPath}/qiniu/styles/highlight.css">
+<!--[if lt IE 9]>
+<script src="http://jssdk.demo.qiniu.io/bower_components/respond/dest/respond.min.js"></script>
+<![endif]-->
+<input type="hidden" name="{$name}" value="{$value}" id="video_upload"/>
+<div class="container" style="padding-top: 60px;">
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="demo" aria-labelledby="demo-tab">
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-md-12">
+                    <div id="container" style="margin-bottom:-40px;">
+                        <a class="btn btn-default btn-lg " id="pickfiles" href="#" >
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>选择文件</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-12 ">
+                    <table class="table table-striped table-hover text-left"   style="margin-top:40px;display:none">
+                        <thead>
+                        <tr>
+                            <th class="col-md-4">文件名称</th>
+                            <th class="col-md-2">文件大小</th>
+                            <th class="col-md-6">上传进度</th>
+                        </tr>
+                        </thead>
+                        <tbody id="fsUploadProgress">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var GV = {
+        'getToken' : "{:url('system/plugs/open',['plugname'=>'uploadvideo','plugaction'=>'qiniu','plugfun'=>'getToken'])}",
+        'domain_bucket' : "{$domain_bucket}",
+        'upload_size' : "{$upload_size}",
+        'plugPath' : "{$plugPath}"
+    };
+</script>
+<script type="text/javascript" src="http://jssdk.demo.qiniu.io/bower_components/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="http://jssdk.demo.qiniu.io/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://jssdk.demo.qiniu.io/bower_components/plupload/js/moxie.js"></script>
+<script type="text/javascript" src="http://jssdk.demo.qiniu.io/bower_components/plupload/js/plupload.dev.js"></script>
+<!-- <script type="text/javascript" src="bower_components/plupload/js/plupload.full.min.js"></script> -->
+<script type="text/javascript" src="http://jssdk.demo.qiniu.io/bower_components/plupload/js/i18n/zh_CN.js"></script>
+<script type="text/javascript" src="{$plugPath}/qiniu/scripts/ui.js"></script>
+<script type="text/javascript" src="{$plugPath}/qiniu/scripts/qiniu.min.js"></script>
+<script type="text/javascript" src="{$plugPath}/qiniu/scripts/highlight.js"></script>
+<script type="text/javascript" src="{$plugPath}/qiniu/scripts/main.js"></script>
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
