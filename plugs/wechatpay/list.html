@@ -1,0 +1,83 @@
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{$title}</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="input-group search-form">
+                                    <input type="text" placeholder="请输入支付订单号" name="out_trade_no" value="" class="search-input input-sm form-control">
+                                    <span class="input-group-btn">
+                                        <button type="button" id="search" url="{:url('Addons/adminlist',['name'=>'wechatpay'])}" class="btn btn-sm btn-primary">搜索</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="icheckbox_square-green" style="position: relative;">
+                                                <input type="checkbox" class="i-checks check-all" id="check-all"  style="position: absolute; opacity: 0;"/>
+                                            </div>
+                                        </th>
+                                        <script>
+
+                                        </script>
+                                        <th>ID</th>
+                                        <th>oepnid</th>
+                                        <th>订单金额</th>
+                                        <th>商户订单号</th>
+                                        <th>微信支付订单号</th>
+                                        <th>支付时间</th>
+                                        <!--<th>操作</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {volist name="list" id="vo"}
+                                    <tr>
+                                        <td>
+                                            <div class="icheckbox_square-green" style="position: relative;">
+                                                <input type="checkbox" class="i-checks ids" name="ids[]" value="{$vo.id}" style="position: absolute; opacity: 0;"/>
+                                            </div>
+                                        </td>
+                                       <td>{$vo.id}</td>
+                                       <td>{$vo.openid}</td>
+                                       <td>{$vo.money}</td>
+                                       <td>{$vo.out_trade_no}</td>
+                                       <td>{$vo.transaction_id}</td>
+                                       <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+                                       <!--<td>-->
+                                            <!--<a href="{:plugUrl('focusimg/FocusCat/edit',['id'=>$vo['id']])}">-->
+                                                <!--<i class="fa fa-wrench text-navy"></i>-->
+                                                <!--编辑-->
+                                            <!--</a>-->
+
+                                            <!--<a class="confirm ajax-get" href="{:plugUrl('focusimg/FocusCat/del',['id'=>$vo['id']])}">-->
+                                                <!--<i class="fa fa-trash text-danger"></i>-->
+                                                <!--删除-->
+                                            <!--</a>-->
+
+                                       <!--</td>-->
+                                    {/volist}   
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-12 m-b-xs">
+                                <div class="btn-group center-block">
+                                    {$page}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

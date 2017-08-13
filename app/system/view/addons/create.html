@@ -1,0 +1,197 @@
+{extend name="base/common" /}
+{block name="body"}
+	<div class="wrapper wrapper-content animated fadeIn">
+		<div class="ibox float-e-margins">
+				<div class="ibox-title">
+                        <h5>插件快速创建</h5>
+                 </div>
+			<div class="ibox-content">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="tabs-container">
+						
+							<div class="tab-content">
+									<div class="ibox-content" style="border:none">
+										<form class="form-horizontal" action="{:url('build')}" method="post" >
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">实现的钩子方法</label>
+												<div class=".col-xs-6 col-sm-10">
+													<select class="form-control m-b" name="hook[]" size="10" multiple required>
+														{volist name="$Hooks" id="vo"}
+														<option value="{$vo.name}"  >标识:[{$vo.name}]----描述:[{$vo.description}]</option>
+														{/volist}	
+														</select>
+														<span class="help-block m-b-none">
+															<i class="fa fa-info-circle"></i>
+															请选择您所创建插件依附的钩子
+														</span>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">标识名 </label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="" name="info[name]" placeholder="请输入插件标识" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">插件名 </label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="" name="info[title]" placeholder="请输入插件名" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">版 本</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="" name="info[version]" placeholder="请输入插件版本" />
+													</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">作 者</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="" name="info[author]" placeholder="请输入插件作者" />
+												</div>	
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">描 述</label>
+												<div class=".col-xs-6 col-sm-10">
+													<textarea name="info[description]" class="form-control" required="" aria-required="true"></textarea>
+												</div>	
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">配置选项</label>
+												<div class=".col-xs-6 col-sm-10">
+
+													<div class="checkbox i-checks checkbox-inline">
+														<label class="">
+															<div class="icheckbox_square-green" style="position: relative;">
+																<input type="checkbox" name="info[status]" value="1" checked="" style="position: absolute; opacity: 0;"></div>
+															<i></i>
+															安装后是否启用
+														</label>
+													</div>
+													<div class="checkbox i-checks checkbox-inline">
+														<label class="">
+															<div class="icheckbox_square-green " style="position: relative;">
+																<input type="checkbox" id="has_config" name="has_config" value="1" style="position: absolute; opacity: 0;"></div>
+															<i></i>
+															是否需要配置
+														</label>
+													</div>
+													<div class="checkbox i-checks checkbox-inline">
+														<label class="">
+															<div class="icheckbox_square-green " style="position: relative;">
+																<input type="checkbox" name="has_outurl" value="1" style="position: absolute; opacity: 0;"></div>
+															<i></i>
+															是否需要外部访问
+														</label>
+													</div>
+	
+												</div>
+											</div>
+											
+											<div class="form-group" id="configSet" style="display:none;">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">配 置</label>
+												<div class=".col-xs-6 col-sm-10">
+													<textarea name="config" class="form-control" required="" aria-required="true" style="height: 300px;">
+														
+&lt;?php
+return [
+	'random'=>[ //配置在表单中的键名 ,这个会是config[random]
+		'title'=>'是否开启随机:',//表单的文字 [必填]
+		'type'=>'radio',		 //表单的类型：text、textarea、checkbox、radio、select等 [必填] 特殊类型：tisp 用于提示
+		'options'=>[	 //select 和radion、checkbox的子选项  [可选]
+			'1'=>'开启',		 //值=>文字
+			'0'=>'关闭',
+		],
+		'value'=>'1',			 //表单的默认值 [必填]
+	],
+];
+
+													</textarea>
+													<br>
+													<input type="text" class="form-control" value="" name="custom_config" />
+													<span class="help-block m-b-none">
+															<i class="fa fa-info-circle"></i>
+															自定义模板,注意：自定义模板里的表单name必须为config[name]这种，获取保存后配置的值用$data.config.name
+														</span>
+												</div>	
+											</div>
+
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">配置选项</label>
+												<div class=".col-xs-6 col-sm-10">
+
+													<div class="checkbox i-checks checkbox-inline">
+														<label class="">
+															<div class="icheckbox_square-green" style="position: relative;">
+																<input type="checkbox" id="has_adminlist" name="has_adminlist" value="1" style="position: absolute; opacity: 0;"></div>
+															<i></i>
+															勾选，会展示列表菜单，可自定义菜单的父级。
+														</label>
+													</div>
+												</div>
+											</div>
+
+											<div class="form-group" id="configInput" style="display:none;">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">表单配置</label>
+												<div class=".col-xs-6 col-sm-10">
+													<textarea name="admin_list" class="form-control" required="" aria-required="true" style="height: 300px;">
+'pid'		=>	'3',				//默认父菜单为扩展
+'font_class'=>	'plug',				//列表图标，参考 /system/menu/fontselect.html
+'model'		=>	'Example',		//要查的表
+'fields'	=>	'*',			//要查的字段
+'map'		=>	'',				//查询条件, 如果需要可以在插件类的构造方法里动态重置这个属性
+'order'		=>	'id desc',		//排序方式
+'listKey'	=>	[				//这里定义的是除了id序号外的表格里字段显示的表头名
+	'字段名'=>'表头显示名',
+	'字段名'=>'表头显示名'
+],
+													</textarea>
+													<br>
+													<input type="text" class="form-control" value="" name="custom_adminlist" />
+													<span class="help-block m-b-none">
+															<i class="fa fa-info-circle"></i>
+															自定义模板,注意：自定义模板里的列表变量为$_list这种,遍历后可以用listkey可以控制表头显示,也可以完全手写，分页变量用$_page
+														</span>
+												</div>	
+											</div>
+
+											<div class="form-group">
+												<div class="col-sm-2"></div>
+												<div class="col-sm-4">
+													<input type="hidden" name="id" value="" /> 
+													<button class="btn btn-primary ajax-post" type="submit" target-form="form-horizontal">保存内容</button>
+
+													<button class="btn btn-white btn-back" type="button" >返回</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	$("#has_config").on('ifChecked', function(event){
+        $("#configSet").show();
+    });
+
+    $("#has_config").on('ifUnchecked', function(event){
+        $("#configSet").hide();
+    });
+
+    $("#has_adminlist").on('ifChecked', function(event){
+        $("#configInput").show();
+    });
+
+    $("#has_adminlist").on('ifUnchecked', function(event){
+        $("#configInput").hide();
+    });
+	</script>
+ {/block}

@@ -1,0 +1,77 @@
+{extend name="base/common" /}
+{block name="body"}
+	<div class="wrapper wrapper-content animated fadeIn">
+		<div class="ibox float-e-margins">
+				<div class="ibox-title">
+                        <h5>排序</h5>
+                 </div>
+			<div class="ibox-content">
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="tabs-container">
+						
+							<div class="tab-content">
+									<div class="ibox-content" style="border:none">
+										<form class="form-horizontal" action="{:url()}" method="post" >
+										<!--  排序开始 -->
+							                <div class="ibox ">
+							                    <div class="ibox-content" style="border:none;">
+							                        <p class="m-b-lg">
+							                             请拖拽出您要排列的数据。
+							                        </p>
+							                        <div class="dd" id="nestable">
+							                            <ol class="dd-list">
+							                            {volist name="$lists" id="vo"}	
+							                                <li class="dd-item" data-id="{$vo.id}">
+							                                    <div class="dd-handle">{$vo.title}</div>
+							                                </li>
+							                             {/volist}   
+							                            </ol>
+							                        </div>
+							                        <input id="nestable-output" class="form-control" name="sort" type="hidden" />
+							                    </div>
+							                </div>
+										<!--  排序结束 -->
+											<div class="form-group">
+												<div class="col-sm-2"></div>
+												<div class="col-sm-4">
+													
+													<button class="btn btn-primary ajax-post" type="submit" target-form="form-horizontal">保存内容</button>
+
+													<button class="btn btn-white btn-back" type="button" >返回</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+     <script src="{$_js}/plugins/nestable/jquery.nestable.js"></script>
+     <script>
+     	$(document).ready(function() {
+     		var updateOutput = function(e) {
+			        var list = e.length ? e: $(e.target),
+			        output = list.data("output");
+			        if (window.JSON) {
+			        	//console.log(window.JSON.stringify(list.nestable("serialize")));
+			            output.val(window.JSON.stringify(list.nestable("serialize")))
+			        } 
+    		};
+
+     		$("#nestable").nestable({
+        		group:1,
+        		maxDepth:1
+    		}).on("change", updateOutput);
+
+    		updateOutput($("#nestable").data("output", $("#nestable-output")));
+     	});
+     </script>
+ {/block}

@@ -1,0 +1,48 @@
+{extend name="base/common" /}
+{block name="body"}
+<div class="wrapper wrapper-content animated fadeIn">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>编辑用户组</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="tabs-container">
+                        <div class="tab-content">
+                            <div class="ibox-content" style="border:none">
+                                <form class="form-horizontal" action="{:url('addAuthManager')}" method="post" >
+                                    <div class="form-group">
+                                        <label class=".col-xs-6 col-sm-2 control-label text-right">用户组</label>
+                                        <div class=".col-xs-6 col-sm-10">
+                                            <input type="text" class="form-control" value="{$info.title}" name="title" placeholder="用户组中文名称" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class=".col-xs-6 col-sm-2 control-label text-right">描述</label>
+                                        <div class=".col-xs-6 col-sm-10">
+                                            <input type="text" class="form-control" value="{$info.description}" name="description" placeholder="描述" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-2"></div>
+                                        <div class="col-sm-4">
+                                            <input type="hidden" value="{$info.id}" name="id" />
+                                            <button class="btn btn-primary ajax-post" type="submit" target-form="form-horizontal">保存</button>
+                                            <button class="btn btn-white btn-back" type="button" >返回</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

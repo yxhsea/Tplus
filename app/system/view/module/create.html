@@ -1,0 +1,73 @@
+{extend name="base/common" /}
+{block name="body"}
+	<div class="wrapper wrapper-content animated fadeIn">
+		<div class="ibox float-e-margins">
+				<div class="ibox-title">
+                        <h5>插件快速创建</h5>
+                 </div>
+			<div class="ibox-content">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="tabs-container">
+						
+							<div class="tab-content">
+									<div class="ibox-content" style="border:none">
+										<form class="form-horizontal" action="{:url('build')}" method="post" >
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">模块名 </label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="" name="info[name]" placeholder="请输入模块名" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">标识 </label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="" name="info[title]" placeholder="请输入标识名" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">描 述</label>
+												<div class=".col-xs-6 col-sm-10">
+													<textarea name="info[description]" class="form-control" required="" aria-required="true"></textarea>
+												</div>	
+											</div>
+
+											<div class="form-group">
+												<div class="col-sm-2"></div>
+												<div class="col-sm-4">
+													<input type="hidden" name="id" value="" /> 
+													<button class="btn btn-primary ajax-post" type="submit" target-form="form-horizontal">保存内容</button>
+
+													<button class="btn btn-white btn-back" type="button" >返回</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	$("#has_config").on('ifChecked', function(event){
+        $("#configSet").show();
+    });
+
+    $("#has_config").on('ifUnchecked', function(event){
+        $("#configSet").hide();
+    });
+
+    $("#has_adminlist").on('ifChecked', function(event){
+        $("#configInput").show();
+    });
+
+    $("#has_adminlist").on('ifUnchecked', function(event){
+        $("#configInput").hide();
+    });
+	</script>
+ {/block}

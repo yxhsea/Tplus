@@ -1,0 +1,88 @@
+{extend name="base/common" /}
+{block name="body"}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+     <div class="ibox-title">
+                        <h5>部门管理</h5>
+                        <div class="ibox-tools">
+                            <a href="{:url('add')}" class="btn btn-primary btn-xs">添加部门</a>
+                        </div>
+
+
+              </div>
+        <div class="row">
+            <!-- <div class="col-sm-4"> -->
+                {volist name="list" id="vo"}
+                <div class="ibox">
+                    <div class="ibox-title">
+                       <!--  <span class="label label-primary pull-right">NEW</span> -->
+                        <h5>IT-{$vo.id} - {$vo.title}</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="team-members">
+                            {volist name=":get_position_user($vo['id'])" id="so"}
+                             <a href="#" title="{$so.nickname}"><img alt="{$so.nickname}" class="img-circle" src="{$so['head_img']|getImgUrl}"></a>
+                            {/volist}
+                            
+                        </div>
+                        <h4>部门简介</h4>
+                        <p style="display: block;-webkit-margin-before: 1em;-webkit-margin-after: 1em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;font-size: 13px;color: #676a6c;">
+                            {$vo.content}
+                        </p>
+                        <!-- <div>
+                            <span>当前项目进度：</span>
+                            <div class="stat-percent">48%</div>
+                            <div class="progress progress-mini">
+                                <div style="width: 48%;" class="progress-bar"></div>
+                            </div>
+                        </div> -->
+                       <!--  <div class="row  m-t-sm">
+                           <div class="col-sm-4">
+                               <div class="font-bold">项目</div>
+                               12
+                           </div>
+                           <div class="col-sm-4">
+                               <div class="font-bold">周期</div>
+                               4个月
+                           </div>
+                           <div class="col-sm-4 text-right">
+                               <div class="font-bold">预算</div>
+                               &yen;200,913 <i class="fa fa-level-up text-navy"></i>
+                           </div>
+                       </div> -->
+                       <div class="row m-t-sm" style="float:right;">
+                           
+                            <a href="{:url('edit',['id'=>$vo['id']])}">
+                            <i class="fa fa-edit"></i>
+                            修改
+                            </a>
+                              
+                            <a class="confirm ajax-get" style="margin-left:10px;"
+                            href="{:url('deleteData',['module'=>'Position','ids'=>$vo['id']])}">
+                            <i class="fa fa-trash text-danger"></i>
+                            删除
+                            </a>
+                           {if condition="$vo['status'] eq 1"}
+                            <a class="ajax-get" style="margin-left:10px;" href="{:url('setStatus',['module'=>'Position','ids'=>$vo['id'],'status'=>0])}"> 
+                            <i class="fa fa-check"></i>
+                           启用</a>
+                              {else/}
+                               <a class="ajax-get" style="margin-left:10px;" href="{:url('setStatus',['module'=>'Position','ids'=>$vo['id'],'status'=>1])}"> 
+                            <i class="fa fa-ban"></i>
+                           禁用</a>
+                              {/if}            
+                          
+                       </div>
+
+                    </div>
+                </div>
+                {/volist}
+               
+            <!-- </div> -->
+        </div>
+        <div class="btn-group center-block">
+
+                                {$page}
+                            </div>
+    </div>
+    {/block}   

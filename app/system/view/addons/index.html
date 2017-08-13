@@ -1,0 +1,110 @@
+{extend name="base/common" /}
+{block name="body"}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>插件列表</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-9 m-b-xs">
+                                 <a class="btn btn-primary" href="{:url('create')}"><i class="fa fa-plus"></i> &nbsp;创建插件</a>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>名 称</th>
+                                        <th>标 识</th>
+                                        <th>描 述</th>
+                                        <th>状 态</th>
+                                        <th>作 者</th>
+                                        <th>版 本</th>
+                                        <th>操 作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {volist name="list" id="vo"}
+                                    <tr>
+                                        <td>
+                                           {$vo.title}
+                                        </td>
+                                        <td> {$vo.name}</td>
+                                        <td>{$vo.description}</td>
+                                        <td>{if condition="isset($vo['status']) eq false"}
+                                                未安装
+                                            {else /}
+                                                {if condition="$vo['status'] eq 1"}
+                                                    启用
+                                                {else /}
+                                                    禁用
+                                                {/if}
+                                             {/if}</td>
+                                        <td>{$vo.author}</td>
+                                        <td>{$vo.version}</td>
+                                        <td>
+                                            {empty name="vo.uninstall"}
+                                                <?php
+                                                    $class  = get_plugs_class($vo['name']);
+                                                    if(!class_exists($class)){
+                                                        $has_config = 0;
+                                                    }else{
+                                                        $addon = new $class();
+                                                        $has_config = count($addon->getConfig());
+                                                    }
+                                                ?>
+                                                <?php if ($has_config){ ?>
+                                                    <a href="{:url('config',array('id'=>$vo['id']))}">
+                                                        <i class="fa fa-wrench text-navy"></i>
+                                                        设置
+                                                    </a>
+                                                <?php } ?>
+                                            <?php if ($vo['status'] >=0){ ?>
+                                                {eq name="vo.status" value="0"}
+                                                   
+                                                    <a href="{:url('setStatus',['module'=>'Addons','ids'=>$vo['id'],'status'=>1])}" class="ajax-get">
+                                                        <i class="fa fa-check text-navy"></i>
+                                                        启用
+                                                    </a>
+                                                {else /}
+                                                    <a href="{:url('setStatus',['module'=>'Addons','ids'=>$vo['id'],'status'=>0])}" class="ajax-get">
+                                                        <i class="fa fa-ban text-danger"></i>
+                                                        禁用
+                                                    </a>
+                                                {/eq}
+                                            <?php } ?>
+                                                {// {eq name="vo.author" value="thinkphp"}}
+                                                    <a class="confirm ajax-get" href="{:url('uninstall?id='.$vo['id'])}">
+                                                         <i class="fa fa-trash text-danger"></i>
+                                                        卸载
+                                                    </a>
+                                                {// {/eq}}
+                                            {else /}
+                                                 <a class="ajax-get" href="{:url('install?addon_name='.$vo['name'])}">
+                                                    <i class="fa fa-plus text-navy"></i>
+                                                安装
+                                                </a>
+                                            {/empty}
+                                        </td>
+                                    </tr>
+                                    {/volist}   
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 m-b-xs">
+                                <div class="btn-group center-block">
+                                    {$page}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+   {/block}

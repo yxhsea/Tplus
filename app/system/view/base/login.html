@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>T+ 最清爽的后台框架 - 登录</title>
+    <meta name="keywords" content="T+ 最清爽的后台框架">
+    <meta name="description" content="T+ 最清爽的后台框架">
+    <link href="{$_css}/bootstrap.min.css" rel="stylesheet">
+    <link href="{$_css}/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="{$_css}/animate.min.css" rel="stylesheet">
+    <link href="{$_css}/style.min.css" rel="stylesheet">
+    <link href="{$_css}/login.min.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="{$_css}/bigvideo.css">-->
+   
+    <script>
+        if(window.top!==window.self){window.top.location=window.location};
+    </script>
+</head>
+<body class="signin">
+    <div class="signinpanel">
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="signin-info">
+                    <div class="logopanel m-b">
+                        <h1>[ T+ ]</h1>
+                    </div>
+                    <div class="m-b"></div>
+                    <h4>欢迎使用 <strong>T+ 轻后台管理系统</strong></h4>
+                    <ul class="m-b">
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> MVC结构，快速开发、轻松维护</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 集成插件机制，安装卸载间完成您的梦想</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 友好模板TAG标签，快速上手</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> Auth权限方式搭建，灵活控制权限</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 后台轻松管理前端HTML模板</li>
+                    </ul>
+                    <strong>T+官方网址 <a href="#">立即跳转&raquo;</a></strong>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <form method="post" action="{:url('Base/login')}">
+                    <h4 class="no-margins">登录：</h4>
+                    <p class="m-t-md">登录到T+ 轻内容管理系统</p>
+                    <input type="text" class="form-control uname" name="username" placeholder="用户名" />
+                    <input type="password" class="form-control pword m-b" name="password" placeholder="密码" />
+                    <a href="#">忘记密码了？</a>
+                    <button class="btn btn-success btn-block" id="login" >登录</button>
+                </form>
+            </div>
+        </div>    </div>
+
+        <div class="signup-footer">
+            <div class="pull-left">
+                &copy; 2016 All Rights Reserved. T+
+            </div>
+        </div>
+    <script src="{$_js}/jquery.min.js?v=2.1.4"></script>
+    <script src="{$_js}/bootstrap.min.js?v=3.3.6"></script>
+    <script src="{$_js}/plugins/iCheck/icheck.min.js"></script>
+    <script src="{$_js}/plugins/toastr/toastr.min.js"></script>
+    <script src="{$_js}/jquery-ui-1.8.22.custom.min.js"></script>
+    <script src="{$_js}/jquery.imagesloaded.min.js"></script>
+    <!--<script src="{$_js}/video.js"></script>-->
+    <!--<script src="{$_js}/bigvideo.js"></script>-->
+    <script src="{$_js}/common.js"></script>
+
+    <script>
+$("body").keydown(function() {
+    if (event.keyCode == "13") {
+        $("#login").click();
+    }
+});  
+        /*$(function() {
+            if(IsPC() == true) {
+                var BV = new $.BigVideo();
+                BV.init();
+                BV.show('{$_img}/agency-labs-intro-video.mp4',{ambient:true});
+            }
+        });*/
+         
+    </script>
+</body>
+</html>

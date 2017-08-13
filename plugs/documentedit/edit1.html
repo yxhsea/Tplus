@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="{$plugPath}/layui/css/layui.css"  media="all">
+<script src="{$plugPath}/layui/layui.js" charset="utf-8"></script>
+<textarea class="layui-textarea" id="{$name}" name="{$name}" style="display: none">  
+  把编辑器的初始内容放在这textarea即可
+</textarea>
+<script>
+layui.use('layedit', function(){
+  var layedit = layui.layedit
+  ,$ = layui.jquery;
+  //构建一个默认的编辑器
+  var index = layedit.build('{$name}');
+  
+/*  $(".ajax-post").click(function(){
+  	alert(1);
+  	layedit.sync(index);
+  });*/
+  //自定义工具栏
+  /*layedit.build('{$name}', {
+    tool: ['face', 'link', 'unlink', '|', 'left', 'center', 'right']
+    ,height: 100
+  })*/
+});
+</script>

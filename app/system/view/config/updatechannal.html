@@ -1,0 +1,93 @@
+{extend name="base/common" /}
+{block name="body"}
+	<div class="wrapper wrapper-content animated fadeIn">
+		<div class="ibox float-e-margins">
+				<div class="ibox-title">
+                        <h5>导航管理</h5>
+                 </div>
+			<div class="ibox-content">
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="tabs-container">
+							<div class="tab-content">
+									<div class="ibox-content" style="border:none">
+										<form class="form-horizontal" action="{:url()}" method="post" >
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">上级导航</label>
+												<div class=".col-xs-6 col-sm-10">
+													<select class="form-control m-b" name="pid" >
+														<option value="0"  >顶级导航</option>
+															{volist name="$channel" id="vo"}
+															<option value="{$vo.id}" >{$vo.title_show}</option>
+															{/volist}
+														</select>
+														<span class="help-block m-b-none">
+															<i class="fa fa-info-circle"></i>
+															请选择该导航所属的上级导航
+														</span>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">导航标题</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="" name="title" placeholder="请输入导航标题，以汉字为主" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">导航链接</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="" name="url" placeholder="请输入导航链接，url函数解析的URL或者外链" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">导航优先级</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="" name="sort" placeholder="导航显示顺序" />
+
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">是否新窗口打开</label>
+												<div class=".col-xs-6 col-sm-10">
+													<div class="radio i-checks radio-inline">
+														<label class="">
+															<div class="iradio_square-green " style="position: relative;">
+																<input type="radio" checked="true"  value="1" name="target" style="position: absolute; opacity: 0;"></div>
+															<i></i>
+															是
+														</label>
+													</div>
+													<div class="radio i-checks radio-inline">
+														<label class="">
+															<div class="iradio_square-green" style="position: relative;">
+																<input type="radio" value="0" name="target" style="position: absolute; opacity: 0;"></div>
+															<i></i>
+															否
+														</label>
+													</div>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="col-sm-2"></div>
+												<div class="col-sm-4">
+													<input type="hidden" name="id" value="" /> 
+													<button class="btn btn-primary ajax-post" type="submit" target-form="form-horizontal">保存导航</button>
+
+													<button class="btn btn-white btn-back" type="button" >返回</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+ {/block}

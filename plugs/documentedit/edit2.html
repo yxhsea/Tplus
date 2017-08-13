@@ -1,0 +1,127 @@
+<link rel="stylesheet" href="{$plugPath}/css/summernote.css">
+<link rel="stylesheet" href="{$plugPath}/css/summernote-bs3.css">
+<textarea name="{$name}" id="summernote" >{$value}</textarea>
+
+<script src="http://malsup.github.io/jquery.form.js"></script>
+<script src="{$plugPath}/js/summernote.min.js"></script>
+<script src="{$plugPath}/js/summernote-zh-CN.js"></script>
+
+<script>
+$(document).ready(function() {
+    $("#summernote").summernote({
+        lang: "zh-CN",
+        height:'300px',
+        onblur: function(e) {
+    		$(this).parent().parent().find('textarea').val($(this).code());
+  		},
+  		
+  		onImageUpload: function(files, editor, $editable) {
+  			console.log(files);
+		  	sendFile(files[0],editor,$editable);
+		} 
+		
+    })
+
+});
+
+function sendFile(file, editor, $editable){
+	$('#summernote').summernote('insertImage', "http://res.cloudinary.com/demo/image/upload/butterfly.jpg",'222');
+	//$(".note-toolbar.btn-toolbar").append('正在上传图片');
+	var filename = false;
+	try{
+		filename = file['name'];
+		
+	} catch(e){
+		filename = false;
+	}
+	if(!filename){
+		//$(".note-alarm").remove();
+	}
+
+	//以上防止在图片在编辑器内拖拽引发第二次上传导致的提示错误
+	/*var ext = filename.substr(filename.lastIndexOf("."));
+	ext = ext.toUpperCase();
+	var timestamp = new Date().getTime();
+	var name = timestamp+"_"+$("#summernote").attr('aid')+ext;*/
+	//name是文件名，自己随意定义，aid是我自己增加的属性用于区分文件用户
+	//var data = new FormData();
+	//console.log(data.append("kyu", file));
+	/*data.append("file", file);
+	data.append("key",name);
+	data.append("token",$("#summernote").attr('token'));*/
+	//var data = {'Filename':name,'download':file};
+	// var formData = new FormData();
+	// formData.append("file",file);
+	// console.log(file);
+	// data.append("file", file);
+	var form = createForm();
+	$(".note-image-input").attr('name','download');
+	$(".note-image-input").clone().appendTo(form); 
+	var filename_input = $("<input type='text' />");
+	filename_input.attr('name','Filename');
+	filename_input.val(filename);
+	filename_input.appendTo(form); 
+	console.log(form);
+	 var ajaxFormOption = {
+                type: "post",  //提交方式  
+                dataType: "json", //数据类型  
+                data: form.serialize(),//自定义数据参数，视情况添加
+                url: "{:url('system/File/uploadPicture',array('session_id'=>session_id()))}", //请求url  
+                success: function (data) { //提交成功的回调函数 
+                	console.log(data); 
+                	//alert(1);
+                	editor.insertImage($editable, data.data);  
+                    /*var h5Node = $(".row-fluid").find('h5');
+				    $.each(h5Node,function(key,value){
+				    	if($(value).text() == '从本地上传'){
+				    		if($(value).next().attr('class') != 'note-image-input'){
+				    			var html = '<input class="note-image-input" type="file" name="files" accept="image/*">';
+				    			$(value).insertAfter(html);
+				    		}
+				    	}
+				    });*/
+                }
+            };
+     form.ajaxSubmit(ajaxFormOption);       
+	/*$.ajax({
+		data: file,
+		type: "POST",
+		url: "{:url('system/File/uploadPicture',array('session_id'=>session_id()))}", //图片上传出来的url，返回的是图片上传后的路径，http格式
+		contentType: "json",
+		cache: false,
+		processData: false,
+		success: function(data1) {
+			//data是返回的hash,key之类的值，key是定义的文件名
+			alert(data1);
+			//把图片放到编辑框中。editor.insertImage 是参数，写死。后面的http是网上的图片资源路径。
+			//网上很多就是这一步出错。
+			$('#summernote').summernote('editor.insertImage', "http://res.cloudinary.com/demo/image/upload/butterfly.jpg");
+			 
+			$(".note-alarm").html("上传成功,请等待加载");
+			setTimeout(function(){$(".note-alarm").remove();},3000);
+		},
+		error:function(){
+			$(".note-alarm").html("上传失败");
+			setTimeout(function(){$(".note-alarm").remove();},3000);
+		}
+	});*/
+return true;
+}
+   function createForm () {  
+        /*var form = document.createElement("form");  
+        form.action = "{:url('system/File/uploadPicture',array('session_id'=>session_id()))}";  
+        form.method = "post";  
+        form.enctype = "multipart/form-data";  
+        form.style.display = "none";  
+        //将表单加当document上，  
+        document.body.appendChild(form);  //创建表单后一定要加上这句否则得到的form不能上传。document后要加上body,否则火狐下不行。  
+        return $(form);  */
+        var form =  $('<form></form>'); 
+        form.attr('action',"{:url('system/File/uploadPicture',array('session_id'=>session_id()))}"); 
+        form.attr('method',"post"); 
+        form.attr('enctype',"multipart/form-data"); 
+        form.hide();
+        $("body").append(form);
+        return form;
+ }
+</script>

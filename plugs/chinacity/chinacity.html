@@ -1,0 +1,69 @@
+<div class="col-md-3 col-xs-3" style="padding-left: 0"><select name="province" id="J_province" class="form-control">{$region['province']}</select></div>
+<div class="col-md-3 col-xs-3"><select name="city" id="J_city" class="form-control" {if condition="$region['city'] eq ''"}style="display:none;"{/if}>{$region['city']}</select></div>
+<div class="col-md-3 col-xs-3"><select name="district" class="form-control" id="J_district"{if condition="$region['district'] eq ''"}style="display:none;"{/if} >{$region['district']}</select></div>
+<!-- <select name="community" id="J_community" {if condition="$region['community'] eq ''"}style="display:none;"{/if}>{$region['community']}</select> -->
+
+<style>
+select { float: left;}
+</style>
+<!--<script src="__STATIC__/jquery-1.10.2.min.js"></script>-->
+<script type="text/javascript">
+	$(document).ready(function(){
+
+		$('#J_province').change(function(){
+			var	upid = $(this).val();
+			if(upid == ''){
+				result = '<option value=""> --城市--</option>';
+				$('#J_city').show().hide().html('');
+				$('#J_district').hide().html('');
+				$('#J_community').hide().html('');
+			}else{
+				$.post("{:plugUrl('chinacity/Chinacity/getAreaList')}", {upid: upid}, function(data){
+					result = '<option value=""> --城市--</option>' + data;
+					$('#J_city').show().html(result);
+					$('#J_district').hide().html('');
+					$('#J_community').hide().html('');
+				});
+			}
+
+
+		});
+		$('#J_city').change(function(){
+			var	upid = $(this).val();
+			if(upid == ''){
+				result = '<option value=""> --县区--</option>';
+				$('#J_district').hide().html('');
+				$('#J_community').hide().html('');
+			}else{
+				$.post("{:plugUrl('chinacity/Chinacity/getAreaList')}", {upid: upid}, function(data){
+					if(data != ""){
+						result = '<option value=""> --县区--</option>' + data;
+						$('#J_district').show().html(result);
+						$('#J_community').hide().html('');
+					}else{
+						$('#J_district').hide().html('');
+						$('#J_community').hide().html('');
+					}
+				});
+			}
+
+		});
+
+		/*$('#J_district').change(function(){
+			var	upid = $(this).val();
+			if(upid == ''){
+				$('#J_community').hide().html('');
+			}else{
+				$.post("{:plugUrl('chinacity/Chinacity/getAreaList')}", {upid: upid}, function(data){
+					if(data != "") {
+						result = '<option value=""> --镇村--</option>' + data;
+						$('#J_community').show().html(result);
+					}else {
+						$('#J_community').hide().html('');
+					}
+				});
+			}
+
+		});*/
+	});
+</script>

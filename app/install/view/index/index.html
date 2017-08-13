@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T+ 最清爽的后台框架 - 安装向导</title>
+    <meta name="keywords" content="T+ 最清爽的后台框架">
+    <meta name="description" content="T+ 最清爽的后台框架">
+    <link rel="shortcut icon" href="./favicon.ico">
+    <link href="{$_css}/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="{$_css}/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="{$_css}/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="{$_css}/plugins/steps/jquery.steps.css" rel="stylesheet">
+    <link href="{$_css}/animate.min.css" rel="stylesheet">
+    <link href="{$_css}/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>T+ 2.1 最清爽的后台框架 - 安装向导</h5>
+                </div>
+                <div class="ibox-content">
+                    <p style="font-size: 18px">
+                        Tplus <span style="font-size: 8px">(T+)</span>
+                        是一个基于Thinkphp{$Think.VERSION}的一个后台框架。使用T+需要掌握Tp的基本技能。
+                    </p>
+                    <form id="form" action="{:url()}" method="post" class="wizard-big form-horizontal">
+                        <h1>安装协议</h1>
+                        <fieldset>
+                            <h2>账户信息</h2>
+                            <h2>Tplus安装协议</h2>
+                            <p>版权所有 (c) 2016，湖南极睿信息科技有限公司保留所有权利。</p>
+                            <p>
+                                用户须知：无论您是个人或组织、盈利与否、用途如何（包括以学习和研究为目的），均需仔细阅读本协议。请您审阅并接受或不接受本服务条款。如您不同意本服务条款，您应不使用或主动取消Tplus产品。否则，您的任何对Tplus的相关服务的注册、登陆、下载、查看等使用行为将被视为您对本服务条款全部的完全接受，包括接受极睿科技对服务条款随时所做的任何修改。
+                            </p>
+                            <p>
+                                本服务条款一旦发生变更,
+                                极睿科技将在产品官网上公布修改内容。修改后的服务条款一旦在网站公布即有效代替原来的服务条款。您可随时登陆官网查阅最新版服务条款。如果您选择接受本条款，即表示您同意接受协议各项条件的约束。如果您不同意本服务条款，则不能获得使用本服务的权利。您若有违反本条款规定，极睿科技有权随时中止或终止您对Tplus产品的使用资格并保留追究相关法律责任的权利。
+                            </p>
+                            <p>
+                                在理解、同意、并遵守本协议的全部条款后，方可开始使用Tplus产品。
+                            </p>
+                            <p>
+                                顶想公司拥有Tplus的全部知识产权，包括商标和著作权。本软件只供许可协议，并非出售。顶想只允许您在遵守本协议各项条款的情况下复制、下载、安装、使用或者以其他方式受益于本软件的功能或者知识产权。</p>
+
+                            <p>Tplus遵循Apache Licence2开源协议，并且免费使用（但不包括其衍生产品、插件或者服务）。Apache
+                                Licence是著名的非盈利开源组织Apache采用的协议。该协议和BSD类似，鼓励代码共享和尊重原作者的著作权，允许代码修改，再作为开源或商业软件发布。需要满足的条件：</p>
+                            <p>1． 需要给用户一份Apache Licence ；</p>
+                            <p>2． 如果你修改了代码，需要在被修改的文件中说明；</p>
+                            <p>3． 在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议，商标，专利声明和其他原来作者规定需要包含的说明；</p>
+                            <p>4． 如果再发布的产品中包含一个Notice文件，则在Notice文件中需要带有本协议内容。你可以在Notice中增加自己的许可，但不可以表现为对Apache
+                                Licence构成更改。</p>
+                            <p style="font-size: 18px">如果您点击下一步将视为同意以上安装协议</p>
+                        </fieldset>
+                        <h1>环境监测</h1>
+                        <fieldset>
+                            <h2>环境监测</h2>
+                            <div class="row">
+                                <div class="ibox-content">
+                                    <table class="table" id="check">
+                                        <tbody>
+                                        <tr>
+                                            <td>项目</td>
+                                            <td>所需配置</td>
+                                            <td>当前配置</td>
+                                            <td>监测结果</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <br /><br />
+                            <h2>目录、文件权限检查</h2>
+                            <div class="row">
+                                <div class="ibox-content">
+                                    <table class="table" id="check_file">
+                                        <tbody>
+                                        <tr>
+                                            <td>目录/文件</td>
+                                            <td>所需状态</td>
+                                            <td>当前状态</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>数据库</h1>
+                        <fieldset>
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4">
+                        <h2>创建数据库</h2>
+                            <div style="border-top: 1px dashed #afb9bf;" class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input type="text" name="ip" value="127.0.0.1" placeholder="数据库服务器，数据库服务器IP，一般为127.0.0.1" class="form-control">
+                                </div>
+                            </div>
+                            <div style="border-top: 1px dashed #afb9bf;" class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input type="text" name="mysqlname" placeholder="数据库名" class="form-control">
+                                </div>
+                            </div>
+                            <div style="border-top: 1px dashed #afb9bf;" class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input type="text" name="username" value="" placeholder="数据库用户名" class="form-control">
+                                </div>
+                            </div>
+                            <div style="border-top: 1px dashed #afb9bf;" class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input type="text" name="password" value="" placeholder="数据库密码" class="form-control">
+                                </div>
+                            </div>
+                            <div style="border-top: 1px dashed #afb9bf;" class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input type="text" name="port" value="3306" placeholder="数据库端口，数据库服务连接端口，一般为3306" class="form-control">
+                                </div>
+                            </div>
+                            <div style="border-top: 1px dashed #afb9bf;" class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input type="text" name="prefix" value="t_" placeholder="数据表前缀，同一个数据库运行多个系统时请修改为不同的前缀" class="form-control">
+                                </div>
+                            </div>
+                            <h2>创建超级管理员</h2>
+                            <div style="border-top: 1px dashed #afb9bf;" class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input type="text" name="adminname" value="admin" placeholder="用户名" class="form-control">
+                                </div>
+                            </div>
+                            <div style="border-top: 1px dashed #afb9bf;" class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input type="password" name="adminpwd" value="" placeholder="密码" class="form-control">
+                                </div>
+                            </div>
+                            <div style="border-top: 1px dashed #afb9bf;" class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input type="password" name="adminrepwd" value="" placeholder="确认密码" class="form-control">
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </fieldset>
+                        <h1>安装</h1>
+                        <fieldset>
+                            <div class="col-sm-12">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>正在安装Tplus</h5>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <ol id="create">
+                                            <li>正在创建addons表...</li>
+                                            <li>正在创建auth_group表...</li>
+                                            <li>正在创建auth_rule表...</li>
+                                            <li>正在创建config表...</li>
+                                            <li>正在创建hooks表...</li>
+                                            <li>正在创建menu表...</li>
+                                            <li>正在创建picture表...</li>
+                                            <li>正在创建power_user表...</li>
+                                            <li>正在创建user表...</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <h1>完成</h1>
+                        <fieldset>
+                            <h2>恭喜你，成功安装了Tplus，快开始体验激情四射的T+吧~</h2>
+                            <p id="user">管理员用户名：</p>
+                            <p id="pwd">管理员密码：</p>
+                            <a style="font-size: 20px" href="{:url('system/index/index')}">进入Tplus</a>
+                        </fieldset>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+<script src="{$_js}/jquery.min.js?v=2.1.4"></script>
+<script src="{$_js}/bootstrap.min.js?v=3.3.6"></script>
+<script src="{$_js}/plugins/staps/jquery.steps.min.js"></script>
+<script src="{$_js}/plugins/validate/jquery.validate.min.js"></script>
+<script src="{$_js}/plugins/validate/messages_zh.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+
+        var steps1 = false;
+        var result = true;
+        $("#form").steps({
+            bodyTag: "fieldset",
+            onStepChanging: function(event, currentIndex, newIndex) {
+                console.log(newIndex);
+                console.log(steps1);
+                if(1 === newIndex && false === steps1){
+                    $.ajax({
+                        url : '{:url()}',
+                        type:'post',
+                        data:{'index':newIndex},
+                        success:function(data){
+                            steps1 = true;
+                            var img = 'error';
+                            if(data.version){
+                                img = 'ok';
+                            }else{
+                                result = false;
+                            }
+                            var disk = 'error';
+                            if(data.disk > 5){
+                                disk = 'ok';
+                            }else{
+                                result = false;
+                            }
+
+                            $('#check').append('<tr><td>PHP版本</td><td>5.5</td><td>{$Think.PHP_VERSION}</td><td><img src="{$_img}/'+ img +'.png" /></td></tr>');
+                            $('#check').append('<tr><td>操作系统</td><td>不限制</td><td>{$Think.const.PHP_OS}</td><td><img src="{$_img}/ok.png" /></td></tr>');
+                            $('#check').append('<tr><td>附件上传</td><td>不限制</td><td>{:ini_get("upload_max_filesize")}</td><td><img src="{$_img}/ok.png" /></td></tr>');
+                            $('#check').append('<tr><td>磁盘空间</td><td>5M</td><td>'+data.disk+'M</td><td><img src="{$_img}/'+disk+'.png" /></td></tr>');
+                            for(var i=0; i<data.items.length; i++){
+                                $('#check_file').append('<tr><td>'+data.items[i][3]+'</td><td><img src="{$_img}/ok.png" />可写</td><td><img src="{$_img}/'+data.items[i][2]+'.png" />'+data.items[i][1]+'</td></tr>');
+                                if('error' == data.items[i][2]){
+                                    result = false;
+                                }
+                            }
+                        },
+                    });
+                }
+
+                if(3 === newIndex){
+                    var ip = $("[name='ip']").val();
+                    var mysqlname = $("[name='mysqlname']").val();
+                    var username = $("[name='username']").val();
+                    var password = $("[name='password']").val();
+                    var port = $("[name='port']").val();
+                    var prefix = $("[name='prefix']").val();
+                    var adminname = $("[name='adminname']").val();
+                    var adminpwd = $("[name='adminpwd']").val();
+                    var adminrepwd = $("[name='adminrepwd']").val();
+                    $.ajax({
+                        async: false,
+                        url :'{:url()}',
+                        type:'post',
+                        data:{'index':newIndex,'ip':ip,'mysqlname':mysqlname,
+                            'username':username,'password':password,'port':port,'prefix':prefix,
+                            'adminname':adminname,'adminpwd':adminpwd,'adminrepwd':adminrepwd},
+                        success:function(data) {
+                            console.log(data);
+                            if(!data.error){
+                                alert(data.msg);
+                                result = false;
+                            }else{
+                                result = true;
+                                $(".actions").hide();
+                            }
+                        }
+                    })
+                }
+                if(!result){
+                    return false;
+                }
+                if(newIndex === 4){
+                    $(".actions").hide();
+                }
+
+                if(currentIndex > newIndex) {
+                    return true
+                }
+                if(newIndex === 5) {
+                    return false
+                }
+                if(currentIndex < newIndex) {
+                    $(".body:eq(" + newIndex + ") label.error", form).remove();
+                    $(".body:eq(" + newIndex + ") .error", form).removeClass("error")
+                }
+
+                return true;
+            },
+            onStepChanged: function(event, currentIndex, priorIndex) {
+                console.log(currentIndex);
+                if(3 == currentIndex){
+                    console.log(currentIndex);
+                    $.ajax({
+                        async: true,
+                        url :'{:url()}',
+                        type:'post',
+                        data:{'index':4},
+                        success:function(data) {
+                            $('#create').append('安装完成！点击下一步查看管理员信息');
+                            $('#user').append(data.adminname);
+                            $('#pwd').append(data.adminpwd);
+                            $(".actions").show();
+                        }
+                    })
+                }
+            },
+            onFinished: function(event, currentIndex) {
+                console.log('onFinished');
+
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>

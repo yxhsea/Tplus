@@ -1,0 +1,54 @@
+<script type="text/javascript" src="{$plugPath}/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="{$plugPath}/script/UploadImages.js"></script>
+<link rel="stylesheet" href="{$plugPath}/style/UploadImages.css">
+<link rel="stylesheet" href="{$plugPath}/style/upbutton.css">
+   <input type="file" id="upload_file_{$name}">
+    <input type="hidden" name="{$name}" value="{$valStr}"/>
+    <div class="upload-img-box">
+        {if condition="$valStr neq 0"}
+        <?php
+            $patharr = explode('/', get_table_value($valStr,'id','path','File'));
+            $infos = $patharr[count($patharr) - 1];
+         ?>
+        <div class="upload-pre-file"><span class="upload_icon_all"></span>{$infos}</div>
+        {/if}
+    </div>
+<script type="text/javascript">
+    //上传图片
+    $(function(){
+                                
+        /* 初始化上传插件 */
+        $("#upload_file_{$name}").uploadify({
+            "height"          : 30,
+            "swf"             : "{$plugPath}/uploadify/uploadify.swf",
+            "fileObjName"     : "download",
+            "buttonText"      : "上传附件",
+            "uploader"        : "{:url('File/uploadFile',array('session_id'=>session_id()))}",
+            "width"           : 120,
+            'removeTimeout'   : 1,
+            "onUploadSuccess" : uploadFile{$name},
+            'onFallback' : function() {
+                alert('未检测到兼容版本的Flash.');
+            }
+        });
+        function uploadFile{$name}(file, data){
+            var data = $.parseJSON(data);
+            if(data.status){
+                var name = "{$name}";
+                $("input[name="+name+"]").val(data.id);
+                $("input[name="+name+"]").parent().find('.upload-img-box').html(
+                    "<div class=\"upload-pre-file\"><span class=\"upload_icon_all\"></span>" + data.info + "</div>"
+                );
+            } else {
+                updateAlert(data.info);
+                setTimeout(function(){
+                    $('#top-alert').find('button').click();
+                    $(that).removeClass('disabled').prop('disabled',false);
+                },1500);
+            }
+        }
+                              
+    })
+    
+
+</script>

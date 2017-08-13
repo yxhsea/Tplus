@@ -1,0 +1,215 @@
+{extend name="base/common" /}
+{block name="body"}
+<style type="text/css">
+    input{
+        background: #99f;
+        opacity: 0;
+    }
+    .hd{
+        background: #e5ebfb;
+        height: 36px;
+        padding-left: 10px;
+        line-height:23px;
+    }
+    .checkbox{
+        display: inline-block;
+    }
+    .threetree{
+        margin-left: 2em;
+    }
+    .child_row{
+        margin-left: 4em;
+        overflow: hidden;
+        display: block;
+    }
+    .child_row label{
+        margin-right: 10px;
+
+    }
+    .thisback{
+        float:left;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        border: 1px #d3cfc8 solid;
+        background-position:-48px 0 ;
+        background-size:1px;
+        vertical-align: middle;
+        margin-right: 8px;
+    }
+    .thisback:hover{
+        display: inline-block;
+        border: 1px solid #2c8f7b;
+    }
+
+</style>
+<div class="wrapper wrapper-content animated fadeIn">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="row">
+                <div class="col-sm-12">
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="{:url('power_access?group_id='.$group_id)}">访问授权</a></li>
+                            <li><a href="{:url('power_category?group_id='.$group_id)}">分类授权</a></li>
+                            <li><a href="{:url('power_user?group_id='.$group_id)}">成员授权</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab" class="tab-pane active">
+                                <div class="ibox-content" style="border: none;">
+                                    <form class="form-horizontal" action="{:url()}" method="post" >
+                                        {volist name="nodes_list" id="node"}
+                                        <dl class="checkmod">
+                                            <dt class="hd">
+                                                <label class="checkbox">
+                                                    <div class="thisback">
+                                                        <input class="auth_rules rules_all" type="checkbox" name="rules[]"
+                                                               value="{php}echo $main_list[$node['url']];{/php}">
+                                                    </div>
+                                                    {$node.title}管理
+                                                </label>
+                                            </dt>
+
+                                                {present name="node['child']"}
+                                            <dd class="bd">
+                                                {volist name="node['child']" id="child"}
+                                                    <div class="rule_check">
+                                                        <div class="threetree">
+                                                            <label class="checkbox" {notempty name="child['tip']" }
+                                                                   data-toggle="tooltip" data-placement="top"
+                                                                   data-original-title="{$child.tip}"
+                                                                   {/notempty}>
+                                                                <div class="thisback">
+                                                                    <input class="auth_rules rules_row" type="checkbox"
+                                                                           name="rules[]"
+                                                                           value="{php} echo $child_list[$child['url']];{/php}">
+                                                                  </div>
+                                                                {$child.title}
+                                                            </label>
+                                                        </div>
+                                                        {notempty name="child['operator']"}
+                                                        <span class="child_row">
+                                                            {volist name="child['operator']" id="op"}
+                                                                <label class="checkbox"
+                                                                       {notempty name="op['tip']" }
+                                                                       data-toggle="tooltip" data-placement="top"
+                                                                       data-original-title='{$op.tip}'
+                                                                       {/notempty}>
+                                                               <div class="thisback">
+                                                                   <input class="auth_rules" type="checkbox" name="rules[]"
+                                                                          value="{php} echo $child_list[$op['url']];{/php}">
+                                                               </div>
+                                                                    {$op.title}
+                                                                </label>
+                                                            {/volist}
+                                                            </span>
+                                                        {/notempty}
+                                                    </div>
+                                                {/volist}
+                                            </dd>
+                                                {/present}
+
+                                        </dl>
+                                        {/volist}
+                                        <div class="form-group">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-4">
+                                                <input type="hidden" name="id" value="{$group_id}"/>
+                                                <button class="btn btn-primary ajax-post" type="submit"
+                                                        target-form="form-horizontal">保存
+                                                </button>
+                                                <button class="btn btn-white btn-back" type="button">返回</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("[data-toggle='tooltip']").tooltip();
+    });
+</script>
+<script type="text/javascript" charset="utf-8">
+    +function ($) {
+        var _flat=0;
+        var rules = [{$this_group}];
+        $('.auth_rules').each(function () {
+            if ($.inArray(parseInt(this.value, 10), rules) > -1) {
+                $(this).prop('checked', true);
+            }
+        });
+
+
+        //全选节点
+
+        $('.rules_all').on('change', function() {
+            var _flat1 = $(this)[0].checked;
+            console.log($(this).closest('dl'));
+            var thisid = $(this).closest('dl').attr('data-id');
+            console.log(thisid);
+            console.log(_flat1);
+            $(this).closest('dl').find('dd').find('input').prop('checked', this.checked);
+            if(_flat1 == true) {
+                $(this).closest('dl').find('dd').find('input').parent('.thisback').css({
+                    "background": "url({$_img}/checked.png) center",
+                    "border": "1px solid #2c8f7b"
+                });
+            } else {
+                $(this).closest('dl').find('dd').find('input').parent('.thisback').css({
+                    "background": "none",
+                    "border": "1px solid #d3cfc8"
+                });
+
+            }
+        });
+
+        $('.auth_rules').on('click', function() {
+            var _flat1 = $(this)[0].checked;
+            if(_flat1 == true) {
+                $(this).parent('.thisback').css({
+                    "background": "url({$_img}/checked.png) center",
+                    "border": "1px solid #2c8f7b"
+                });
+            } else {
+                $(this).parent('.thisback').css({
+                    "background": "none",
+                    "border": "1px solid #d3cfc8"
+                });
+            }
+        })
+        $('.rules_row').on('change', function() {
+            var _flat1 = $(this)[0].checked;
+            $(this).closest('.rule_check').find('.child_row').find('input').prop('checked', this.checked);
+            if(_flat1 == true) {
+                $(this).closest('.rule_check').find('.child_row').find('input').parent('.thisback').css({
+                    "background": "url({$_img}/checked.png) center",
+                    "border": "1px solid #2c8f7b"
+                });
+            } else {
+                $(this).closest('.rule_check').find('.child_row').find('input').parent('.thisback').css({
+                    "background": "none",
+                    "border": "1px solid #d3cfc8"
+                });
+            }
+        });
+        $('input').each(function(i){
+            console.log($(this));
+            if($(this)[0].checked){
+                $(this).parent('.thisback').css({
+                    "background": "url({$_img}/checked.png) center",
+                    "border": "1px solid #2c8f7b"
+                });
+
+            }
+        })
+//
+    }(jQuery);
+</script>
+{/block}

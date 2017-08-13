@@ -1,0 +1,99 @@
+{extend name="base/common" /}
+{block name="body"}
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                               
+                                    <li class="active"><a href="">配置</a></li>
+                               
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab" class="tab-pane active">
+                                    <div class="ibox-content" style="border:none">
+                                        <form method="post" action="{:url('saveConfig')}" class="form-horizontal">
+                                    
+                                           {empty name="custom_config"}
+                                               {foreach name="data['config']" item="form" key="o_key"}
+                                                <div class="form-group">
+                                                    <label class=".col-xs-6 col-sm-2 control-label text-right">{$form.title}</label>
+                                                    <div class=".col-xs-6 col-sm-10">
+                                                        {switch name="form.type"}
+                                                            {case value="tisp"}
+                                                            <input type="hidden" class="form-control" placeholder="" name='config[{$o_key}]' value="{$form.value}" />
+                                                            <p class="form-control-static">{$form.value}</p>
+                                                            {/case}
+                                                            {case value="text"}
+                                                                <input type="text" class="form-control" placeholder="" name='config[{$o_key}]' value="{$form.value}" />
+                                                            {/case}
+                                                            {case value="password"}
+                                                                <input type="password" class="form-control"  placeholder=""  name='config[{$o_key}]' value="{$form.value}" />
+                                                            {/case}
+                                                            {case value="hidden"}
+                                                                <input type="hidden" class="form-control" name='config[{$o_key}]' value="{$form.value}" />
+                                                            {/case}
+                                                            {case value="radio"}
+                                                                <div class="btn-group">
+                                                                    <select class="form-control m-b" name='config[{$o_key}]'>
+                                                                        {foreach name="form.options" item="opt" key="opt_k"}
+                                                                        <option value="{$opt_k}" {eq name="form.value" value="$opt_k"} selected {/eq}>{$opt}</option>
+                                                                        {/foreach}
+                                                                    </select>
+                                                                
+                                                                </div>
+                                                            {/case}
+                                                            {case value="select"}
+                                                                <div class="btn-group">
+                                                                    <select class="form-control m-b" name='config[{$o_key}]'>
+                                                                        {foreach name="form.options" item="opt" key="opt_k"}
+                                                                        <option value="{$opt_k}" {eq name="form.value" value="$opt_k"} selected {/eq}>{$opt}</option>
+                                                                        {/foreach}
+                                                                    </select>
+                                                                    
+                                                                </div>
+                                                            {/case}
+                                                            {case value="textarea"}
+                                                                <textarea class="form-control" rows="3" placeholder="{$form.tip}" name='config[{$o_key}]' >{$form.value}</textarea>
+                                                            {/case}
+                                                             {case value="checkbox"}
+                                                                <div class="btn-group">
+                                                                    <select class="form-control m-b" name='config[{$o_key}][]' multiple required>
+                                                                        {foreach name="form.options" item="opt" key="opt_k"}
+                                                                        <option value="{$opt_k}" {in name="opt_k" value="$form.value"} selected{/in} >{$opt}</option>
+                                                                        {/foreach}
+                                                                    </select>
+                                                                    
+                                                                    
+                                                                </div>
+                                                            {/case}
+                                                        {/switch}   
+                                                         </div>
+                                                </div>   
+                                               {/foreach}
+                                            {else /}
+                                                    {$custom_config}
+                                            {/empty}
+                                        
+                                            <input type="hidden" name="id" value="{$data.id}" readonly>
+                                                
+                                            <div class="form-group">
+                                                <div class="col-sm-2"></div>
+                                                <div class="col-sm-4">
+                                                    <button class="btn btn-primary ajax-post" target-form="form-horizontal" style="width: 100%" type="submit">确定</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+   {/block}

@@ -1,0 +1,108 @@
+{extend name="base/common" /}
+{block name="body"}
+	<div class="wrapper wrapper-content animated fadeIn">
+		<div class="ibox float-e-margins">
+				<div class="ibox-title">
+                        <h5>新增用户</h5>
+                 </div>
+			<div class="ibox-content">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="tabs-container">
+							<div class="tab-content">
+									<div class="ibox-content" style="border:none">
+										<form class="form-horizontal" action="{:url()}" method="post" >
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">真实姓名</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="{$info.nickname}" name="nickname" placeholder="用户的真实姓名" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">登录账号</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" readonly class="form-control" value="{$info.username}" name="username" placeholder="用户的登录账号" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">密码</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="password" class="form-control" value="" name="password" placeholder="用户密码不能少于6位" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">确认密码</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="password" class="form-control" value="" name="repassword" placeholder="重复密码" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">用户邮箱</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="{$info.email}" name="email" placeholder="用户的邮箱地址" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">用户手机</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="{$info.mobile}" name="mobile" placeholder="用户的手机号码" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">用户部门</label>
+												<div class=".col-xs-6 col-sm-10">
+													<select class="form-control" name="position_id">
+														<option value="0" {if condition="$info['position_id'] eq 0"}selected="selected"{/if}>请选择用户的所属部门</option>
+														{volist name="position_res" id="vo"}
+															<option value="{$vo.id}" {if condition="$group_res['group_id'] eq $vo['id']"}selected="selected"{/if}>{$vo.title}</option>
+														{/volist}
+													</select>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">用户权限</label>
+												<div class=".col-xs-6 col-sm-10">
+													<select class="form-control" name="group_id">
+														<option value="0" {if condition="$group_res['group_id'] eq 0"}selected="selected"{/if}>请选择用户的系统权限</option>
+														{volist name="group" id="vo"}
+															<option value="{$vo.id}" {if condition="$group_res['group_id'] eq $vo['id']"}selected="selected"{/if}>{$vo.title}</option>
+														{/volist}
+													</select>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">职位名称</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="{$info.position}" name="position" placeholder="用户的职位名称" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">用户住址</label>
+												<div class=".col-xs-6 col-sm-10">
+													<input type="text" class="form-control" value="{$info.address}" name="address" placeholder="用户的职位名称" />
+												</div>
+											</div>
+											<div class="form-group">
+												<label class=".col-xs-6 col-sm-2 control-label text-right">用户头像</label>
+												<div class=".col-xs-6 col-sm-10">
+													{:plugs('uploadimages',['name'=>'head_img','value'=>$info['head_img'],'type'=>1])}
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-2"></div>
+												<div class="col-sm-4">
+													<input type="hidden" name="id" value="{$info.id}" />
+													<button class="btn btn-primary ajax-post" type="submit" target-form="form-horizontal">保存</button>
+													<button class="btn btn-white btn-back" type="button" >返回</button>
+												</div>
+											</div>
+										</form>
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+ {/block}
