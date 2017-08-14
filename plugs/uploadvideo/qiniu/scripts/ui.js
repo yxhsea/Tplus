@@ -29,6 +29,7 @@ function FileProgress(file, targetID) {
     var progressBarTd = $("<td/>");
     var progressBarBox = $("<div/>");
     progressBarBox.addClass('info');
+    //progressBarBox.css({''});
     var progressBarWrapper = $("<div/>");
     progressBarWrapper.addClass("progress progress-striped");
 
@@ -242,7 +243,8 @@ FileProgress.prototype.setComplete = function(up, info) {
 
   var isImg = isImage(url);
 
-  var Wrapper = $('<div class="Wrapper"/>');
+  //var Wrapper = $('<div class="Wrapper"/>');
+  var Wrapper = '';
   var imgWrapper = $('<div class="imgWrapper col-md-3"/>');
   var linkWrapper = $('<a class="linkWrapper" target="_blank"/>');
   var showImg = $('<img src="images/loading.gif"/>');
@@ -403,7 +405,8 @@ FileProgress.prototype.bindUploadCancel = function(up) {
       function() {
         self.setCancelled(false);
         self.setStatus("取消上传");
-        self.fileProgressWrapper.find('.status').css('left', '0');
+        self.fileProgressWrapper.find('.status').css({"left":"0"});
+        self.fileProgressWrapper.find('td:eq(2)').css({"line-height":"0"});
         up.removeFile(self.file);
       });
   }

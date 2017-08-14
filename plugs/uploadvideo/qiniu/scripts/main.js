@@ -50,6 +50,8 @@ $(function() {
         console.log("before chunk upload:", file.name);
       },
       'FilesAdded': function(up, files) {
+        $('.v_upload').hide();
+        $('.video_edit').hide();
         $('table').show();
         $('#success').hide();
         plupload.each(files, function(file) {

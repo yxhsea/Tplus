@@ -1,41 +1,65 @@
-<link rel="stylesheet" href="http://jssdk.demo.qiniu.io/bower_components/bootstrap/dist/css/bootstrap.css">
 <link rel="stylesheet" href="{$plugPath}/qiniu/styles/main.css">
 <link rel="stylesheet" href="{$plugPath}/qiniu/styles/highlight.css">
 <!--[if lt IE 9]>
 <script src="http://jssdk.demo.qiniu.io/bower_components/respond/dest/respond.min.js"></script>
 <![endif]-->
-<input type="hidden" name="{$name}" value="{$value}" id="video_upload"/>
-<div class="container" style="padding-top: 60px;">
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade in active" id="demo" aria-labelledby="demo-tab">
+<div class="form-group">
+    <label class=".col-xs-6 col-sm-2 control-label text-right">上传视频 </label>
+    <input type="hidden" name="{$name}" value="{$value}" id="video_upload"/>
+    <div class=".col-xs-6 col-sm-10">
+        <div class="container" style="margin-top: -12px;margin-left: -15px;width: auto;">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="demo" aria-labelledby="demo-tab">
 
-            <div class="row" style="margin-top: 20px;">
-                <div class="col-md-12">
-                    <div id="container" style="margin-bottom:-40px;">
-                        <a class="btn btn-default btn-lg " id="pickfiles" href="#" >
-                            <i class="glyphicon glyphicon-plus"></i>
-                            <span>选择文件</span>
-                        </a>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-12 v_upload">
+                            <div id="container" style="margin-bottom:-6px;">
+                                <a class="btn btn-default btn-sm " id="pickfiles" href="#" style="background-color: #1ab394;">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>选择视频文件</span>
+                                </a>
+                            </div>
+                        </div>
+                        {notempty name="$value"}
+                            <div class="col-md-12 video_edit" style="margin-top: -40px;">
+                                <table class="table table-striped table-hover text-left"   style="margin-top:40px;">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-md-4">视频文件地址</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <!--注：{$value}需要自行转换成视频链接地址-->
+                                            <a href="{$value}" target="_blank">{$value}</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        {/notempty}
+                        <div class="col-md-12" style="margin-top: -50px;">
+                            <table class="table table-striped table-hover text-left"   style="margin-top:40px;display:none">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-4">文件名称</th>
+                                    <th class="col-md-2">文件大小</th>
+                                    <th class="col-md-6">上传进度</th>
+                                </tr>
+                                </thead>
+                                <tbody id="fsUploadProgress">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-12 ">
-                    <table class="table table-striped table-hover text-left"   style="margin-top:40px;display:none">
-                        <thead>
-                        <tr>
-                            <th class="col-md-4">文件名称</th>
-                            <th class="col-md-2">文件大小</th>
-                            <th class="col-md-6">上传进度</th>
-                        </tr>
-                        </thead>
-                        <tbody id="fsUploadProgress">
-                        </tbody>
-                    </table>
+
                 </div>
             </div>
-
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
     var GV = {
         'getToken' : "{:url('system/plugs/open',['plugname'=>'uploadvideo','plugaction'=>'qiniu','plugfun'=>'getToken'])}",
