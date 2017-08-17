@@ -26,17 +26,7 @@
 													<input type="text" class="form-control" value="{$info.links}" name="links" placeholder="站内链接请填写url()函数的URL形式，站外链接请带有http://" />
 												</div>	
 											</div>
-											
-											<div class="form-group">
-												<label class=".col-xs-6 col-sm-2 control-label text-right">上传图片</label>
-												<div class=".col-xs-6 col-sm-10">
-													{:plugs('uploadimages',['name'=>'pic_id','value'=>$info['pic_id']])}
-													<span class="help-block m-b-none" style="clear:both;">
-															<i class="fa fa-info-circle"></i>
-															上传的图片的尺寸请为950*400
-														</span>
-												</div>
-											</div>
+											{:plugs('uploadimages',['name'=>'pic_id','value'=>$info['pic_id'],'tips'=>'上传的图片的尺寸请为950*400'])}
 
 											<div class="form-group">
 												<div class="col-sm-2"></div>

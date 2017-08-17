@@ -21,6 +21,7 @@ use think\Db;
         ];
 
         public $admin_list = [
+            'menu_title' => '轮播管理',
             'pid' => '3',
             'font_class' => 'plug',
             'model'=>'FocusCat',		//要查的表
