@@ -245,6 +245,7 @@ str;
             $page=$list->render(); //获取分页
             $this->assign('list',$list);
             $this->assign('page',$page);
+            $this->assign('rooturl',$this->request->root(true));
         }
         $addons_tpl_path = PLUGS_PATH.'/'.$name.'/'.$addon->custom_adminlist.'.html';    
         if($addon->custom_adminlist){
@@ -339,7 +340,7 @@ str;
         if(is_array($addons->admin_list) && $addons->admin_list !== []){
             $data['has_adminlist'] = 1;
             $m_data = [
-                'title' => $info['title'],
+                'title' => $addons->admin_list['menu_title'],
                 'pid'   =>  $addons->admin_list['pid'],
                 'sort'  =>  99,
                 'url'   =>  'Addons/adminList',
