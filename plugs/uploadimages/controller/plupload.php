@@ -11,7 +11,7 @@ class plupload extends Addons{
     public function _initialize() {
         //获取uploadimage插件的配置项
         $this->_config = Db::name('addons')->where(['name'=>'uploadimages'])->value('config');
-        $this->_config = json_decode($this->_config,true)['config'];
+        $this->_config = json_decode($this->_config,true);
     }
 
     //图片上传方法
