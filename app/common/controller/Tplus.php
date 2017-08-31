@@ -2,7 +2,7 @@
 namespace app\common\controller;
 /*
 * Tplus前后台公用控制器
-* Author: 初心 [jialin507@foxmail.com]
+* Author: yxhsea@foxmail.com
 */
 use think\Controller;
 class Tplus extends Controller

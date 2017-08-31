@@ -3,7 +3,7 @@ namespace app\common\api;
 use think\Db;
 /*
 * 数据库备份API。
-* Author: 初心 [jialin507@foxmail.com]
+* Author: yxhsea@foxmail.com
 */
 class DataApi{
     /**

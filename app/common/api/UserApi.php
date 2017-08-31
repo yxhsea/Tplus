@@ -2,7 +2,7 @@
 namespace app\common\api;
 /*
 * 用户控制中心，登录注册检查等操作用户数据的所有方法。
-* Author: 初心 [jialin507@foxmail.com]
+* Author: yxhsea@foxmail.com
 */
 use think\Db;
 

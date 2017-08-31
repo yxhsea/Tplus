@@ -2,7 +2,7 @@
 namespace app\install\controller;
 /*
 * 安装Tplus控制器
-* Author: 初心 [jialin507@foxmail.com]
+* Author: yxhsea@foxmail.com
 */
 use app\common\controller\Tplus;
 use think\Db;

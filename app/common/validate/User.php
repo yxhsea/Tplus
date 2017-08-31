@@ -1,7 +1,7 @@
 <?php
 /*
 * 公共用户注册验证器
-* Author: 初心 [jialin507@foxmail.com]
+* Author: yxhsea@foxmail.com
 */
 namespace app\common\validate;
 
