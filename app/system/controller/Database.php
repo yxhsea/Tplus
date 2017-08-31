@@ -1,7 +1,7 @@
 <?php
 /*
 * 后台导航控制器
-* Author: 初心 [jialin507@foxmail.com]
+* Author: yxhsea@foxmail.com
 */
 namespace app\system\controller;
 

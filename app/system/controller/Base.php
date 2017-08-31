@@ -1,7 +1,7 @@
 <?php
 /*
 * 后台开发控制器，不经过权限处理
-* Author: Onion [133433354@qq.com]
+* Author: yxhsea@foxmail.com
 */
 namespace app\system\controller;
 use app\common\api\UserApi;

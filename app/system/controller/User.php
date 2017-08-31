@@ -1,30 +1,29 @@
 <?php
 /*
 * 后台用户控制器
-* Author: 初心 [jialin507@foxmail.com]
+* Author: yxhsea@foxmail.com
 */
 namespace app\system\controller;
 use think\Db;
 use app\system\model\Million;
 use app\system\model\UserModel;
 use think\Loader;
+
 class User extends Admin
 {
 	//1-用户列表
 	public function index(){
-	
 		$list = Db::name('user')->order('id ASC')->paginate(10); //分页查询
 		$page=$list->render(); //获取分页
 		$this->assign('list',$list);
 		$this->assign('page',$page);
-		return $this->fetch('cardindex');
+		return $this->fetch();
 	}
 	//1.1-新增用户
 	public function addUser(){
 		if($this->request->isAjax()){
 			$db = Db::name('user');
 			$data = $db->createData(1);
-			$param = $this->request->param();
 			if(!$data){return $this->ajaxError('数据不能为空');}
 			$data['repassword'] = input('post.repassword');
 			//加载验证器进行验证
@@ -36,44 +35,32 @@ class User extends Admin
 			$data['reg_ip'] = get_client_ip(1);
 			$data['status'] = 1; //启用
 			//data数据收集验证完成，开始新增数据。
-            $res = $db->insertGetId($data);
-            
+            $res = $db->insert($data);
             if($res){
-            	Db::name('power_user')->insert(['uid'=>$res,'group_id'=>$param['group_id']]);
                 return $this->ajaxSuccess('用户信息新增成功!',url('Index'));
             }else{
                 return $this->ajaxError('用户新增失败!');
             }
         }
-        $this->assign('group',Db::name('auth_group')->where(['status'=>1])->select());
-        $this->assign('position_res',Db::name('Position')->where(['status'=>1])->select());
 		return $this->fetch();
 	}
 	//1.2-修改用户
 	public function updateUser(){
 		$db = Db::name('user');
-
 		if($this->request->isAjax()){
 			$data = $db->createData(1);
-			$param = $this->request->param();
 			if(!$data){return $this->ajaxError('数据不能为空');}
 			$data['repassword'] = input('post.repassword');
-			if(!empty($data['password'])){
-				//加载验证器进行验证
-				$validate = Loader::validate('User');
-				if(!$validate->check($data)){return $this->ajaxError($validate->getError());}
-				unset($data['repassword']);//验证完成后删除重复密码
-				$data['password'] = tplus_ucenter_md5($data['password'],config('auth_key'));//加密
-			}else{
-				unset($data['password']);
-				unset($data['repassword']);
-			}
+			//加载验证器进行验证
+			$validate = Loader::validate('User');
+			if(!$validate->check($data)){return $this->ajaxError($validate->getError());}
+			unset($data['repassword']);//验证完成后删除重复密码
+			$data['password'] = tplus_ucenter_md5($data['password'],config('auth_key'));//加密
 			$map['id'] = $data['id'];
 			//data数据收集验证完成，开始修改数据。
-			$res = Db::name('user')->where($map)->update($data);
+			$res = $db->where($map)->update($data);
 			//同步修改昵称到用户信息表
 			if($res){
-				Db::name('power_user')->update(['uid'=>$map['id'],'group_id'=>$param['group_id']]);
                 return $this->ajaxSuccess('用户信息修改成功!',url('Index'));
 			}else{
 				return $this->ajaxError('用户信息修改失败!');
@@ -82,17 +69,12 @@ class User extends Admin
 			$map['id'] = $this->request->param('id');
 			$info = $db->where($map)->find();
 			$this->assign('info',$info);
-			$group_res = Db::name('power_user')->where(['uid'=>$map['id']])->find();
-			$this->assign('group_res',$group_res);
 		}
-		$this->assign('group',Db::name('auth_group')->where(['status'=>1])->select());
-		 $this->assign('position_res',Db::name('Position')->where(['status'=>1])->select());
 		return $this->fetch();
 	}
 
 	//2-权限列表
 	public function AuthManager(){
-		
 		$list = Db::name('auth_group')->order('id ASC')->paginate(10); //分页查询
 		$page=$list->render(); //获取分页
 		$this->assign('list',$list);
@@ -105,13 +87,12 @@ class User extends Admin
 		if($this->request->isAjax()){
 			$data = $db->createData(1);
 			if(!$data){return $this->ajaxError('分组数据不能为空');}
-			
 			if(empty($data['id'])){
 				$data['module'] = 'System';
 				$data['type'] = '1';//用户组标识，1为管理员组
-				$res = Db::name('auth_group')->insert($data);
+				$res = $db->insert($data);
 			}else{
-				$res = Db::name('auth_group')->update($data);
+				$res = $db->update($data);
 			}
 			if($res){
 				return $this->ajaxSuccess('分组信息编辑成功!',url('AuthManager'));
@@ -119,8 +100,6 @@ class User extends Admin
 				return $this->ajaxError('分组信息编辑失败!');
 			}
 		}else{
-			
-			$this->assign('is_root',IS_ROOT);
 			if($this->request->has('id')){
 				//根据传入ID读取指定信息。
 				$id = $this->request->param('id');
@@ -198,16 +177,16 @@ class User extends Admin
 
 		$map['type'] = 2; //顶级
 		$map['status'] = 1;//正常未被禁用
-		//$map['module'] = 'system';//管理员模块
+		$map['module'] = 'system';//管理员模块
 		//查询一级菜单
 		$main_list = $access->where($map)->column('id','name');
 		//查询二级菜单
 		$map['type'] = 1;//二级
 		$child_list = $access->where($map)->column('id','name');
-		//dump($nodes_list);
+
 		//共用一个查询条件
 		$auth_group = db('auth_group')->where($map)->column('rules','id');
-		//dump($nodes_list);
+
 		$this->assign('nodes_list',$nodes_list);
 		$this->assign('this_group', $auth_group[$group_id]);
 		$this->assign('main_list',$main_list);
@@ -231,81 +210,35 @@ class User extends Admin
 		if((int)$tree){
 			$list = db('Menu')->field('id,pid,title,url,param,tip,hide')->order('sort asc')->select();
 			foreach ($list as $key => $value) {
-				$ulrarr = explode('/', $value['url']);
-				$mod = 'system';
-				if(count($ulrarr) == 3){
-					$mod = $ulrarr[0];
-				}
                 $value['param'] = str_replace(['&','='],'/',$value['param']);
-				if( stripos($value['url'],$mod)!==0 ){
+				if( stripos($value['url'],'System')!==0 ){
                     if(strlen($value['param'])>0){
-                        $list[$key]['url'] = $mod.'/'.$value['url'].'/'.$value['param'];
+                        $list[$key]['url'] = 'System'.'/'.$value['url'].'/'.$value['param'];
                     }else{
-                        $list[$key]['url'] = $mod.'/'.$value['url'];
+                        $list[$key]['url'] = 'System'.'/'.$value['url'];
                     }
-
 				}
 			}
 			$nodes = list_to_tree($list,$pk='id',$pid='pid',$child='operator',$root=0);
-
 			foreach ($nodes as $key => $value) {
-                if ( !IS_ROOT && !$this->checkRule($value['url'],['in','1,2']) ) {
-                    unset($nodes[$key]);
-                    continue;//继续循环
-                }
-
 				if(!empty($value['operator'])){
 					$nodes[$key]['child'] = $value['operator'];
 					unset($nodes[$key]['operator']);
-					foreach ($nodes[$key]['child'] as $skey => $svalue) {
-						if ( !IS_ROOT && !$this->checkRule($svalue['url'],['in','1,2']) ) {
-			                    unset($nodes[$key]['child'][$skey]);
-			                    continue;//继续循环
-					     }
-                   
-
-						if(!empty($svalue['operator'])){
-							foreach ($svalue['operator'] as $dkey => $dvalue) {
-								if ( !IS_ROOT && !$this->checkRule($dvalue['url'],['in','1,2']) ) {
-					                    unset($nodes[$key]['child'][$skey]['operator'][$dkey]);
-					                    continue;//继续循环
-					                }
-							}
-						}
-					}
-					//如果不是超级管理员无权限分配 权限管理的功能
-					if(strpos($nodes[$key]['title'],'管理员')!== false && !IS_ROOT){
-						unset($nodes[$key]);
-					    continue;//继续循环
-					}
-					
 				}
 			}
-			
 		}else{
 			$nodes = db('Menu')->field('title,url,param,tip,pid')->order('sort asc')->select();
 			foreach ($nodes as $key => $value) {
-				$ulrarr = explode('/', $value['url']);
-				$mod = 'system';
-				if(count($ulrarr) == 3){
-					$mod = $ulrarr[0];
-				}
-
 			    $value['param'] = str_replace(['&','='],'/',$value['param']);
-				if( stripos($value['url'],$mod)!==0 ){
+				if( stripos($value['url'],'System')!==0 ){
 				    if(strlen($value['param'])>0){
-                        $nodes[$key]['url'] = $mod.'/'.$value['url'].'/'.$value['param'];
+                        $nodes[$key]['url'] = 'System'.'/'.$value['url'].'/'.$value['param'];
                     }else{
-                        $nodes[$key]['url'] = $mod.'/'.$value['url'];
-                    }
-                     if ( !IS_ROOT && !$this->checkRule($nodes[$key]['url'],['in','1,2']) ) {
-                        unset($nodes[$key]);
-                        continue;//继续循环
+                        $nodes[$key]['url'] = 'System'.'/'.$value['url'];
                     }
 				}
 			}
 		}
-
 		$tree_nodes[(int)$tree]   = $nodes;
 		return $nodes;
 	}
@@ -318,21 +251,17 @@ class User extends Admin
 		//需要新增的节点必然位于$nodes
 		$nodes    = $this->returnNodes(false);
 		$AuthRule = Db::name('auth_rule');
-		//$map['module'] = 'system';//status全部取出,以进行更新
+		$map['module'] = 'system';//status全部取出,以进行更新
 		$map['type'] = array('in','1,2');
 		//需要更新和删除的节点必然位于$rules
 		$rules    = $AuthRule->where($map)->order('name')->select();
 		//构建insert数据
 		$data     = array();//保存需要插入和更新的新节点
+
 		foreach ($nodes as $value){
 			$temp['name']   = $value['url'];
 			$temp['title']  = $value['title'];
-			$ulrarr = explode('/', $value['url']);
-			$mod = 'system';
-			if(count($ulrarr) == 3){
-				$mod = $ulrarr[0];
-			}
-			$temp['module'] = $mod;
+			$temp['module'] = 'system';
 			if($value['pid'] >0){
 				$temp['type'] = 1;
 			}else{

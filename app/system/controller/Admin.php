@@ -2,7 +2,7 @@
 /*
 * 后台公共控制器,主要为权限，公共操作方法的集合
 * 需要权限验证，或公共操作方法需继承此控制器
-* Author: Onion [133433354@qq.com]
+* Author: yxhsea@foxmail.com
 */
 namespace app\system\controller;
 

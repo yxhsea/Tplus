@@ -13,15 +13,9 @@
 									<div class="ibox-content" style="border:none">
 										<form class="form-horizontal" action="{:url()}" method="post" >
 											<div class="form-group">
-												<label class=".col-xs-6 col-sm-2 control-label text-right">真实姓名</label>
+												<label class=".col-xs-6 col-sm-2 control-label text-right">用户名</label>
 												<div class=".col-xs-6 col-sm-10">
-													<input type="text" class="form-control" value="" name="nickname" placeholder="用户的真实姓名" />
-												</div>
-											</div>
-											<div class="form-group">
-												<label class=".col-xs-6 col-sm-2 control-label text-right">登录账号</label>
-												<div class=".col-xs-6 col-sm-10">
-													<input type="text" class="form-control" value="" name="username" placeholder="用户的登录账号" />
+													<input type="text" class="form-control" value="" name="username" placeholder="用户名会作为默认的昵称" />
 												</div>
 											</div>
 											<div class="form-group">
@@ -34,58 +28,6 @@
 												<label class=".col-xs-6 col-sm-2 control-label text-right">确认密码</label>
 												<div class=".col-xs-6 col-sm-10">
 													<input type="password" class="form-control" value="" name="repassword" placeholder="重复密码" />
-												</div>
-											</div>
-											<div class="form-group">
-												<label class=".col-xs-6 col-sm-2 control-label text-right">用户邮箱</label>
-												<div class=".col-xs-6 col-sm-10">
-													<input type="text" class="form-control" value="" name="email" placeholder="用户的邮箱地址" />
-												</div>
-											</div>
-											<div class="form-group">
-												<label class=".col-xs-6 col-sm-2 control-label text-right">用户手机</label>
-												<div class=".col-xs-6 col-sm-10">
-													<input type="text" class="form-control" value="" name="mobile" placeholder="用户的手机号码" />
-												</div>
-											</div>
-											<div class="form-group">
-												<label class=".col-xs-6 col-sm-2 control-label text-right">用户部门</label>
-												<div class=".col-xs-6 col-sm-10">
-													<select class="form-control" name="position_id">
-														<option value="0" selected="selected">请选择用户的所属部门</option>
-														{volist name="position_res" id="vo"}
-															<option value="{$vo.id}" >{$vo.title}</option>
-														{/volist}
-													</select>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class=".col-xs-6 col-sm-2 control-label text-right">用户权限</label>
-												<div class=".col-xs-6 col-sm-10">
-													<select class="form-control" name="group_id">
-														<option value="0">请选择用户的系统权限</option>
-														{volist name="group" id="vo"}
-															<option value="{$vo.id}">{$vo.title}</option>
-														{/volist}
-													</select>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class=".col-xs-6 col-sm-2 control-label text-right">职位名称</label>
-												<div class=".col-xs-6 col-sm-10">
-													<input type="text" class="form-control" value="" name="position" placeholder="用户的职位名称" />
-												</div>
-											</div>
-											<div class="form-group">
-												<label class=".col-xs-6 col-sm-2 control-label text-right">用户住址</label>
-												<div class=".col-xs-6 col-sm-10">
-													<input type="text" class="form-control" value="" name="address" placeholder="用户的职位名称" />
-												</div>
-											</div>
-											<div class="form-group">
-												<label class=".col-xs-6 col-sm-2 control-label text-right">用户头像</label>
-												<div class=".col-xs-6 col-sm-10">
-													{:plugs('uploadimages',['name'=>'head_img','value'=>0,'type'=>1])}
 												</div>
 											</div>
 											<div class="form-group">
